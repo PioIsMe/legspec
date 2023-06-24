@@ -1,0 +1,26 @@
+local specsList = {"Indra's Mangekyo Sharingan v2", "Rinnegan v1", "Rinnegan v2", "Rinnegan v3", "Rinnegan v4", "Sasuke's Rinnegan v1", "Itachi's Mangekyo Sharingan v4", "Itachi's Mangekyo Sharingan v5",}
+
+local remoteEvent = game:GetService("ReplicatedStorage"):WaitForChild("RemoteEvents"):WaitForChild("SpinRemote")
+
+local function isSpecInList(spec)
+   for _, value in ipairs(specsList) do
+       if value == spec then
+           return true
+       end
+   end
+   return false
+end
+
+local function repeatFireRemote()
+   while true do
+       local localPlayer = game:GetService("Players").LocalPlayer
+       local spec = localPlayer and localPlayer.PlayerValues.Specialization.Value
+       if isSpecInList(spec) then
+           return
+       end
+       remoteEvent:FireServer(1)
+       wait(0.1)
+   end
+end
+
+repeatFireRemote()
